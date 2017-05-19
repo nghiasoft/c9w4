@@ -1,0 +1,56 @@
+---
+title: 'Course Project: Shiny Application and Reproducible Pitch'
+author: "Nghia Dai Tran"
+date: "5/19/2017"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Overview
+
+This was built as part of a deliverable for the course Developing Data Products as part of the Coursera Data Science Specialization.
+
+The app developed for the first part of the assignment demo is avalilable at: 
+https://nghiasoft.shinyapps.io/c9w4/
+
+Source code for ui.R and server.R files are available on the GitHub repo: https://github.com/nghiasoft/c9w4
+
+## Web Application functionality
+- The sites is providing a tools for to help user know about
+diamond price based on the quality of cut.  
+- User can choose the quality of cut then they can see the Diamond Price
+cistribution based on it.  
+- The App also provide to user the summarize of the current data and detail data
+frame of ech quality of cut.
+
+## Dataset
+The dataset containing the prices and other attributes of almost 54,000 diamonds.
+A data frame with 53940 rows and 10 variables:  
+- price: price in US dollars (\$326–\$18,823)  
+- carat: weight of the diamond (0.2–5.01)  
+- cut: quality of the cut (Fair, Good, Very Good, Premium, Ideal)  
+- color: diamond colour, from J (worst) to D (best)  
+- clarity: a measurement of how clear the diamond is (I1 (worst), SI1, SI2, VS1, VS2, VVS1, VVS2, IF (best))  
+- x: length in mm (0–10.74)  
+- y: width in mm (0–58.9)  
+- z: depth in mm (0–31.8)  
+- depth: total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43–79)  
+- table: width of top of diamond relative to widest point (43–95)
+
+## The prices of diamonds based on its wight and quality of the cut
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+library(plotly)
+set.seed(260689)
+d <- diamonds[sample(nrow(diamonds), 1000), ]
+p <- ggplot(data = d, aes(x = carat, y = price)) + ggtitle("") +
+  geom_point(aes(text = paste("Clarity:", clarity))) +
+  geom_smooth(aes(colour = cut, fill = cut)) + facet_wrap(~ cut)
+
+ggplotly(p)
+```
+
+## Thank you
